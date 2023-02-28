@@ -21,6 +21,7 @@ from resources.films import Film   # resource model
 from models.datamodels.films import Film_  # pydantic model
 
 from dal.db_conn_helper import get_db_conn
+from dal.dml import insert_resource
 
 
 if __name__ == "__main__":
@@ -30,15 +31,53 @@ if __name__ == "__main__":
     # create DB connection
     conn = get_db_conn()
 
-    # to create a sql query to insert data into database.
-    # DDL - CREATE
-    # DML - SELECT, INSERT, UPDATE
+    film_columns = [
+        "title",
+        "opening_crawl",
+        "director",
+        "producer",
+        "release_date",
+        "created",
+        "edited",
+        "url",
+    ]
 
-    magic_sql = "INSERT INTO {database}.{table} ({column1}, {column2}, ....)" \
-                "VALUES ({value1}, {value2})"
+    film_values = [
+        film_data.title,
+        film_data.opening_crawl,
+        film_data.director,
+        film_data.producer,
+        film_data.release_date,
+        film_data.created.strftime("%y-%m-%d"),
+        film_data.edited.strftime("%y-%m-%d"),
+        film_data.url,
+    ]
+    breakpoint()
+
+    result = insert_resource(
+        "film", "film_id", film_data.episode_id, film_columns, film_values
+    )
+
+    # TODO
+    # capture all characters
+    # film_data.characters
+    # only values will change
+    # column list can be once created and re-used
+
+    # TODO
+    # capture all planets
+    # film_data.planets
+    # only values will change
+    # column list can be once created and re-used
 
 
-    # execute the query
+
+
+
+
+
+
+
 
 
 
