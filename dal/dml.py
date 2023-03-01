@@ -5,6 +5,7 @@ This module contains generic functions to insert data into sql tables
 """
 from dal.db_conn_helper import get_db_conn
 from typing import List
+from pymysql.err import IntegrityError
 
 
 def insert_resource(
@@ -46,11 +47,12 @@ def insert_resource(
         sql_magic = f"""insert into 
         starwarsDB.{table_name} ({primary_key_}, {column_names}) 
         values ({primary_value}, {value_fields});"""
-
-        breakpoint()
-
-        result = cursor.execute(sql_magic)
-        conn.commit()
+        try:
+            result = cursor.execute(sql_magic)
+            conn.commit()
+        except IntegrityError as ex:
+            print(f"[ ERROR ] record already exists - {ex}")
+            pass
     return result
 
 
