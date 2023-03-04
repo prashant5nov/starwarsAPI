@@ -100,7 +100,7 @@ if __name__ == "__main__":
 
     characters = film_data.characters
     pool = ThreadPool(5)
-    results = pool.map(fetch_char_names, characters)
+    character_names = pool.map(fetch_char_names, characters)
 
     breakpoint()
 
@@ -111,6 +111,10 @@ if __name__ == "__main__":
     # column list can be once created and re-used
 
     character_data = store_characters()
+
+    planets = film_data.planets
+    pool = ThreadPool(5)
+    planet_names = pool.map(fetch_char_names, planets)
 
     # TODO
     # capture all planets
