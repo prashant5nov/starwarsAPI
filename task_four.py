@@ -18,6 +18,8 @@ For example - "A new hope" movie has following resource endpoints -
 """
 
 from multiprocessing.pool import ThreadPool
+from pydantic import parse_obj_as
+from typing import List
 
 from resources.films import Film   # resource model
 from models.datamodels.films import Film_  # pydantic model
@@ -25,7 +27,7 @@ from models.datamodels.characters import Character_
 
 from dal.db_conn_helper import get_db_conn
 from dal.dml import insert_resource
-from utils.fetch_data import hit_url, fetch_char_names
+from utils.fetch_data import hit_url, fetch_char_names, fetch_data_v2
 from utils.timing import timeit
 
 
@@ -100,8 +102,8 @@ if __name__ == "__main__":
 
     characters = film_data.characters
     pool = ThreadPool(5)
-    results = pool.map(fetch_char_names, characters)
-
+    characters = pool.map(fetch_data_v2, characters)
+    characters = parse_obj_as(List[Character_], characters)
     breakpoint()
 
     # TODO
