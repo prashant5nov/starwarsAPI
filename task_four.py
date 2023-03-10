@@ -30,7 +30,7 @@ from dal.dml import insert_resource
 from utils.fetch_data import hit_url, fetch_char_names, fetch_data_v2
 from utils.timing import timeit
 
-
+#without_multithreading
 @timeit
 def store_characters():
     characters = film_data.characters
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     characters = parse_obj_as(List[Character_], characters)
     breakpoint()
 
-    # TODO - Rahul is developing feature2
+    # TODO - please complete all the TODO tasks
     # capture all characters
     # film_data.characters
     # only values will change
